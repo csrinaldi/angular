@@ -28,13 +28,6 @@
                 link.type = 'text/css';
                 link.href = 'css/print/pdf.css';
                 document.getElementsByTagName('head')[0].appendChild(link);
-
-                Reveal.addEventListener("slidechanged", function() {
-                    alert();
-                    /*var shadow = document.querySelector('#nameTag').createShadowRoot();
-                     var template = document.querySelector('#nameTagTemplate');
-                     shadow.appendChild(template.content);*/
-                }, false);
             }
         </script>
 
@@ -58,6 +51,12 @@
                     text-align: center ;
                     box-shadow: none !important;
                 }
+
+                x-foo{
+                    width: 50px;
+                    height: 15px;
+                    border: 1px salmon solid;
+                }
             </style>
 
             <!--[if lt IE 9]>
@@ -76,8 +75,6 @@
            http://requirejs.org/docs/whyamd.html#today
            http://www.infoq.com/news/2013/08/es6-modules
            https://html5-demos.appspot.com/static/webcomponents/index.html#11
-          
-        
         -->
         <body>
             <div class="reveal">
@@ -141,13 +138,6 @@
                         <section>
                             <h2>Que es AngularJS</h2>
                             <p> Angular es un <b>Framework</b> que nos permite extender el <b>vocabulario de HTML</b>, dotarlo de <b>dinamismo</b>, para lograr aplicaciones modernas para la Web del presente </p>                              
-                            <!--p>
-                                Slides can be nested inside of other slides,
-                                try pressing <a href="#" class="navigate-down">down</a>.
-                            </p>
-                            <a href="#" class="image navigate-down">
-                                <img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-                            </a-->
                         </section>
 
                         <section>
@@ -229,7 +219,7 @@
                         </section>
                     </section>
 
-                    <section data-markdown>
+                    <!--section data-markdown>
                         <script type="text/template">
                             ## Markdown support
 
@@ -244,6 +234,57 @@
                             </section>
                             ```
                         </script>
+                    </section-->
+
+                    <section>
+                        <section>
+                            <h1>Scopes</h1>
+                        </section>
+
+                        <section>
+                            <p>
+                                Es un objeto hace referencia al modelo en la aplicación.<br>
+                                El scope es un contexto de ejecución para las <a href="#/2/3">expresiones</a>.<br>
+                                Ademas, los scopes son organizados en una estructura jerárquica imitando la estructura del DOM.<br>
+                                Puden ver las expresiones y propagar eventos<br>
+                            </p>
+                        </section>
+
+                        <section>
+                            <ul>
+                                <li>Los scopes proveen un método $watch en su API para observar los cambios en el modelo.</li>
+                                <li>Proveen un método $apply para propagar los cambios a través del sistema desde la vista hacia afuera (Controllers, Services, Angular event handlers.</li>
+                                <li>Los scopes pueden ser nested, limitando asi el acceso a propidades del modelo:</li>
+                                <ul>
+                                    <li>Child Scope: Hereda las propiedades del padre</li>
+                                    <li>Insolated Scope: No hereda las propiedades del padre</li>
+                                </ul>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <p>El scope es un pegamento entre la vista y el controller</p>
+                            <p>En la fase de <strong>linking</strong> del template la directiva setea $watch expressions en el scope. <br>
+                                $watch permite a la directiva ser notificada de los cambios en las propiedades, lo que permite actualizar el DOM.
+                            </p>
+                            <p>Tanto controller como la directiva tienen una referencia al scope, pero no entre si</p>
+                            <p>Este principio de visibilidad es muy óptimo porque hace asnóstico de la vista al controller y favorece las pruebas</p>
+                            <pre>
+<code>
+function MyController($scope) {
+    $scope.username = 'World';
+    $scope.sayHello = function() {
+        $scope.greeting = 'Hello ' + $scope.username + '!';
+    };
+}
+</code>
+                            </pre>
+                        </section>
+                    </section>
+
+                    <section>
+
+
                     </section>
 
                     <section>
@@ -426,7 +467,7 @@
                             </template>
                         </section>
 
-                        <section data-state="shadowstate">
+                        <section data-state="shadow_template_loaded">
                             <h3>Shadow DOM & HTML Template</h3>
 
                             <pre>
@@ -437,171 +478,112 @@ shadow.appendChild(template.content.cloneNode());
                             </code>
                             </pre>
                         </section>
-                    </section>
 
-                    <section data-state="customevent">
-                        <h2>Custom Events</h2>
-                        <p>
-                            Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-                        </p>
-                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
-Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-                    </section>
 
-                    <section>
-                        <section data-background="#007777">
-                            <h2>Slide Backgrounds</h2>
-                            <p>
-                                Set <code>data-background="#007777"</code> on a slide to change the full page background to the given color. All CSS color formats are supported.
-                            </p>
-                            <a href="#" class="image navigate-down">
-                                <img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-                            </a>
-                        </section>
-                        <section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png">
-                            <h2>Image Backgrounds</h2>
-                            <pre><code>&lt;section data-background="image.png"&gt;</code></pre>
-                        </section>
-                        <section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" data-background-repeat="repeat" data-background-size="100px">
-                            <h2>Repeated Image Backgrounds</h2>
-                            <pre><code style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-                        </section>
-                    </section>
-
-                    <section data-transition="linear" data-background="#4d7e65" data-background-transition="slide">
-                        <h2>Background Transitions</h2>
-                        <p>
-                            Pass reveal.js the <code>backgroundTransition: 'slide'</code> config argument to make backgrounds slide rather than fade.
-                        </p>
-                    </section>
-
-                    <section data-transition="linear" data-background="#8c4738" data-background-transition="slide">
-                        <h2>Background Transition Override</h2>
-                        <p>
-                            You can override background transitions per slide by using <code>data-background-transition="slide"</code>.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h2>Clever Quotes</h2>
-                        <p>
-                            These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-                                &ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
-                        </p>
-                        <blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-                            &ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-                            reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
-                        </blockquote>
-                    </section>
-
-                    <section>
-                        <h2>Pretty Code</h2>
-                        <pre><code data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) {
-        node.className += ' roll';
-      }
-    }
-  }
-}
-					</code></pre>
-                        <p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-                    </section>
-
-                    <section>
-                        <h2>Intergalactic Interconnections</h2>
-                        <p>
-                            You can link between slides internally,
-                            <a href="#/2/3">like this</a>.
-                        </p>
-                    </section>
-
-                    <section>
-                        <section id="fragments">
-                            <h2>Fragmented Views</h2>
-                            <p>Hit the next arrow...</p>
-                            <p class="fragment">... to step through ...</p>
-                            <ol>
-                                <li class="fragment"><code>any type</code></li>
-                                <li class="fragment"><em>of view</em></li>
-                                <li class="fragment"><strong>fragments</strong></li>
-                            </ol>
-
-                            <aside class="notes">
-                                This slide has fragments which are also stepped through in the notes window.
-                            </aside>
-                        </section>
                         <section>
-                            <h2>Fragment Styles</h2>
-                            <p>There's a few styles of fragments, like:</p>
-                            <p class="fragment grow">grow</p>
-                            <p class="fragment shrink">shrink</p>
-                            <p class="fragment roll-in">roll-in</p>
-                            <p class="fragment fade-out">fade-out</p>
-                            <p class="fragment highlight-red">highlight-red</p>
-                            <p class="fragment highlight-green">highlight-green</p>
-                            <p class="fragment highlight-blue">highlight-blue</p>
-                            <p class="fragment current-visible">current-visible</p>
-                            <p class="fragment highlight-current-blue">highlight-current-blue</p>
+                            <h3>Custom Elements</h3>
+                            <p>Permite a los desarrolladores definir y/o extender elementos del HTML</p>
+                            <pre>
+                                <code data-trim contenteditable style="font-size: 18px;">                        
+var XFoo = document.registerElement('x-foo');
+document.body.appendChild(new XFoo());
+                            </code>
+                            </pre>
+
+                            <script>
+                                document.registerElement('x-foo');
+                                var xFoo = document.createElement('x-foo');
+                                xFoo.addEventListener('click', function(e) {
+                                    alert('Thanks!');
+                                });
+                            </script>
+                        </section>
+
+                        <section>
+                            <h3>HTML Imports</h3>
+                            <p>Es una forma de incluir HTML Documents en otros HTML Documents, no solo HTML sino que CSS, JS y todo lo que pueda estar contenido dentro de un HTML Document</p>
+                            <pre>
+<code data-trim contenteditable>
+&lt;head&gt;
+  &lt;link rel="import" href="/path/to/imports/stuff.html"&gt;
+&lt;/head&gt;
+</code>
+                            </pre>
+                            <pre>
+
+<code>
+&lt;head&gt;
+    <!-- Resources on other origins must be CORS-enabled. -->
+    &lt;link rel="import" href="http://example.com/elements.html"&gt;
+&lt;/head&gt;
+</code>
+                            </pre>
+
+                        </section>
+
+                    </section>
+
+                    <section>
+
+                        <section>
+                            <h1>Polymer</h1>
+                        </section>
+
+                        <section>
+                            <p>Polymer, esta construido sobre las últimas tecnologías para el desarrollo de aplicaciones modernas, pero nativamente no todo está soportado, por lo tanto, la capa mas baja de Polymer es platform.js o polyfill que son un conjunto de librerías que emulan lo que actualmente no esta soportado</p>
+                            <p>platform.js esta desarrollado para ser utilizado de manera separa, por ejemplo: <strong>x-tag</strong> utiliza un subconjunto de platform.js.</p>
+                        </section>
+
+                        <section>
+                            <ul>
+                                <li>Web Components
+                                    <ul>
+                                        <li><a href="/platform/shadow-dom.html">Shadow DOM</a>. Encapsulate DOM subtrees and the associated CSS.</li>
+                                        <li><a href="/platform/html-imports.html">HTML Imports</a>. Load element definitions and other resources declaratively.</li>
+                                        <li><a href="/platform/custom-elements.html">Custom Elements</a> . Define new elements in HTML.</li>
+                                    </ul>
+                                </li>
+                                <li>DOM
+                                    <ul>
+                                        <li><a href="https://github.com/Polymer/URL">URL</a>. Parse URLs in JavaScript.</li>
+                                        <li><a href="https://github.com/Polymer/WeakMap">WeakMap</a>. Shim for ES6 WeakMap type. </li>
+                                        <li><a href="https://github.com/Polymer/MutationObservers">Mutation Observers</a>. Efficiently watch for changes in the DOM.
+                                            <!-- - [Promises](https://github.com/Polymer/Promises). Handle asynchronous operations. --></li>
+                                        <li><a href="https://github.com/Polymer/observe-js">observe-js</a>. Observe changes on JS objects/arrays using <code>Object.observe</code> (if available).</li>
+                                    </ul>
+                                </li>
+                                <li>Other
+                                    <ul>
+                                        <li><a href="https://github.com/Polymer/PointerEvents">Pointer Events</a>. Handle both touch and mouse seamlessly</li>
+                                        <li><a href="https://github.com/Polymer/PointerGestures">Pointer Gestures</a>. More complex touch gestures.</li>
+                                        <li><a href="/platform/web-animations.html">Web Animations</a>. Define complex timeline animations.</li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </section>
                     </section>
 
-                    <section>
-                        <h2>Spectacular image!</h2>
-                        <a class="image" href="http://lab.hakim.se/meny/" target="_blank">
-                            <img width="320" height="299" src="http://s3.amazonaws.com/hakim-static/portfolio/images/meny.png" alt="Meny">
-                        </a>
-                    </section>
 
-                    <section>
+
+
+
+
+                    <!--section>
                         <h2>Export to PDF</h2>
                         <p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, below is an example that's been uploaded to SlideShare.</p>
                         <iframe id="slideshare" src="http://www.slideshare.net/slideshow/embed_code/13872948" width="455" height="356" style="margin:0;overflow:hidden;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
                             <script>
                                 document.getElementById('slideshare').attributeName = 'allowfullscreen';
                             </script>
-                        </section>
-
-                        <section>
-                            <h2>Take a Moment</h2>
-                            <p>
-                                Press b or period on your keyboard to enter the 'paused' mode. This mode is helpful when you want to take distracting slides off the screen
-                                during a presentation.
-                            </p>
-                        </section>
-
-                        <section>
-                            <h2>Stellar Links</h2>
-                            <ul>
-                                <li><a href="http://slid.es">Try the online editor</a></li>
-                                <li><a href="https://github.com/hakimel/reveal.js">Source code on GitHub</a></li>
-                                <li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
-                            </ul>
-                        </section>
-
-                        <section>
-                            <h1>THE END</h1>
-                            <h3>BY Hakim El Hattab / hakim.se</h3>
-                        </section>
-
-                    </div>
-
+                        </section-->
                 </div>
 
-                <script src="lib/js/head.min.js"></script>
-                <script src="js/reveal.min.js"></script>
+            </div>
 
-                <script>
+            <script src="lib/js/head.min.js"></script>
+            <script src="js/reveal.min.js"></script>
+
+            <script>
 
                                 // Full list of configuration options available here:
                                 // https://github.com/hakimel/reveal.js#configuration
@@ -640,7 +622,23 @@ function linkify( selector ) {
                                     ]
                                 });
 
-                </script>
+                                Reveal.addEventListener("shadow_template_loaded", function() {
+                                    if (window.shadow === undefined) {
+                                        window.shadow = true;
+                                        var shadow = document.querySelector('#nameTag').createShadowRoot();
+                                        var template = document.querySelector('#nameTagTemplate');
+                                        shadow.appendChild(template.content);
+                                    }
+                                }, false);
 
-            </body>
-        </html>
+                                Reveal.addEventListener("slidechanged", function() {
+                                    //alert();
+                                    /*var shadow = document.querySelector('#nameTag').createShadowRoot();
+                                     var template = document.querySelector('#nameTagTemplate');
+                                     shadow.appendChild(template.content);*/
+                                }, false);
+
+            </script>
+
+        </body>
+    </html>
