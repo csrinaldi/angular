@@ -28,6 +28,13 @@
                 link.type = 'text/css';
                 link.href = 'css/print/pdf.css';
                 document.getElementsByTagName('head')[0].appendChild(link);
+
+                Reveal.addEventListener("slidechanged", function() {
+                    alert();
+                    /*var shadow = document.querySelector('#nameTag').createShadowRoot();
+                    var template = document.querySelector('#nameTagTemplate');
+                    shadow.appendChild(template.content);*/
+                }, false);
             }
         </script>
 
@@ -42,6 +49,15 @@
                 -ms-transition: all .2s linear;
                 -o-transition: all .2s linear;
                 transition: all .2s linear;
+
+                .reveal pre {
+                    display: block;
+                    position: relative;
+                    width: 100% !important;
+                    margin: 0 !important;
+                    text-align: center ;
+                    box-shadow: none !important;
+                }
             </style>
 
             <!--[if lt IE 9]>
@@ -111,7 +127,6 @@
                             <li>Modularidad</li>
                             <li>Testing</li>
                         </ul>
-
 
                         <aside class="notes">
                             El Browser como plataforma
@@ -189,13 +204,13 @@
                     <section>
                         <h2>Expresiones</h2>
                         <p>
-                            
+
                         </p>
                     </section>
 
                     <section>
                         <h2>Dependency Injection</h2>
-                        
+
                     </section>
 
                     <section>
@@ -224,9 +239,17 @@
                         </script>
                     </section>
 
-                    <section id="transitions">
-                        <h2>Transition Styles</h2>
-                        <p>
+                    <section>
+                        <section>
+                            <h1>Web Component!!</h1>
+                        </section>
+                        <section>
+                            <p>Imagina poder reutilizar tus Widgets en todas tus aplicaciones</p><br>
+                            <p>Imagina poder reutilizar tus componentes lógicos en todas tus aplicaciones</p>
+
+
+                        </section>
+                        <!--p>
                             You can select from different transitions, like: <br>
                             <a href="?transition=cube#/transitions">Cube</a> -
                             <a href="?transition=page#/transitions">Page</a> -
@@ -236,36 +259,177 @@
                             <a href="?transition=fade#/transitions">Fade</a> -
                             <a href="?transition=none#/transitions">None</a> -
                             <a href="?#/transitions">Default</a>
-                        </p>
-                    </section>
+                        </p-->
 
-                    <section id="themes">
-                        <h2>Themes</h2>
-                        <p>
-                            Reveal.js comes with a few themes built in: <br>
-                            <a href="?#/themes">Default</a> -
-                            <a href="?theme=sky#/themes">Sky</a> -
-                            <a href="?theme=beige#/themes">Beige</a> -
-                            <a href="?theme=simple#/themes">Simple</a> -
-                            <a href="?theme=serif#/themes">Serif</a> -
-                            <a href="?theme=night#/themes">Night</a> <br>
-                            <a href="?theme=moon#/themes">Moon</a> -
-                            <a href="?theme=solarized#/themes">Solarized</a>
-                        </p>
-                        <p>
-                            <small>
-                                * Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-                            </small>
-                        </p>
-                    </section>
+                        <section id="themes">
+                            <h2>Como se compone?</h2>
+                            <!--p>
+                                Reveal.js comes with a few themes built in: <br>
+                                <a href="?#/themes">Default</a> -
+                                <a href="?theme=sky#/themes">Sky</a> -
+                                <a href="?theme=beige#/themes">Beige</a> -
+                                <a href="?theme=simple#/themes">Simple</a> -
+                                <a href="?theme=serif#/themes">Serif</a> -
+                                <a href="?theme=night#/themes">Night</a> <br>
+                                <a href="?theme=moon#/themes">Moon</a> -
+                                <a href="?theme=solarized#/themes">Solarized</a>
+                            </p-->
+                            <!--h2>
+                                <font>
+                                <font>
+                                <font>
+                                &nbsp;&nbsp;<font style="font-size: 32px;"><font>Let's use </font>
+                                <font color="#6fa8dc">Packages </font>
+                                <font color="#ffffff">instead...</font>
+                                </font>
+                                </font>
+                                <font style="font-size: 32px;">
+                                </font>
+                                </font>
+                                <font style="font-size: 32px;">
+                                </font>
+                                </font>
+                                <font style="font-size: 32px;">
+                                </font>
+                            </h2-->
+                            <ul>
+                                <li><font color="#ffd966">Shadow DOM:</font> Permite <font color="#6fa8dc">encapsular </font>el DOM y CSS</li>
+                                <li><font color="#ffd966">HTML Templates:</font> Es una forma de clonar el DOM para que este sea reutilizado en la pagina</li>
+                                <li><font color="#ffd966">Custom elements:</font> Esto nos permite extender un elemento de HTML o bien crear uno nuevo.</li>
+                                <li><font color="#ffd966">HTML Imports:</font> Es la manera de inclusión de otros WebComponent.</li>
+                            </ul>
+                            <!--p>
+                                <small>
+                                    * Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
+                                </small>
+                            </p-->
+                        </section>
 
-                    <section>
-                        <h2>Global State</h2>
-                        <p>
-                            Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-                            will be added as a class to the document element when the slide is open. This lets you
-                            apply broader style changes, like switching the background.
-                        </p>
+                        <section>
+                            <h1>Shadow DOM</h1>
+                            <ul>
+                                <li>shadow root: Nuevo tipo de nodo</li>
+                                <li>shadow host: Es todo nodo que tiene asociado un shadow root, 
+                                    El contenido del shadow host no es renderizado, en su lugar es renderizado el contenido del shadow root</li>
+                            </ul>
+                            <pre>
+                                <code data-trim contenteditable style="font-size: 18px;">
+                                    
+&lt;button&gt;Hello, world!&lt;/button&gt;
+&lt;script&gt;
+    var host = document.querySelector('button');
+    var root = host.createShadowRoot();
+    root.textContent = 'こんにちは、影の世界!';
+&lt;/script&gt;
+
+                                </code>
+                            </pre>
+
+
+                            <button>Hello, world!</button>
+                            <script>
+                                var host = document.querySelector('button');
+                                var root = host.createShadowRoot();
+                                root.textContent = 'こんにちは、影の世界!';
+                            </script>
+
+                            <pre>
+                                <code data-trim contenteditable style="font-size: 18px;">
+&lt;script&gt;
+    var host  = document.querySelector('button');
+    var label = document.getElementById("content_shadow_host");
+    label.value = host.textContent;
+&lt;/script&gt;
+                                </code>
+                            </pre>
+
+                            <p id="content_shadow_host"></p>
+
+                            <script>
+                                var host = document.querySelector('button');
+                                var label = document.getElementById("content_shadow_host");
+                                label.innerHTML = host.textContent;
+                            </script>
+
+                        </section>
+
+                        <section>
+                            <h3>Shadow DOM & HTML Template</h3>
+
+                            <pre>
+                                <code data-trim contenteditable style="font-size: 18px;">                        
+&lt;div id="nameTag"&gt;GDG Santa Fe&lt;/div&gt;
+&lt;template id="nameTagTemplate"&gt;
+&lt;style&gt;
+.outer {
+  border: 2px solid brown;
+
+  … same as above …
+
+&lt;/style&gt;
+&lt;div class="outer"&gt;
+  &lt;div class="boilerplate"&gt;
+    Hi! My name is
+  &lt;/div&gt;
+  &lt;div class="name"&gt;
+    Bob
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/template&gt;
+                            </code>
+                            </pre>
+
+                            <div class="fragment" id="nameTag">GDG Santa Fe</div>
+                            <template id="nameTagTemplate">
+                                <style>
+
+                                    .ex2a.outer {
+                                        border: 2px solid brown;
+                                        border-radius: 1em;
+                                        background: red;
+                                        font-size: 20pt;
+                                        width: 12em;
+                                        height: 7em;
+                                        text-align: center;
+                                    }
+                                    .ex2a .boilerplate {
+                                        color: white;
+                                        font-family: sans-serif;
+                                        padding: 0.5em;
+                                    }
+                                    .ex2a .name {
+                                        color: black;
+                                        background: white;
+                                        font-family: "Marker Felt", cursive;
+                                        font-size: 45pt;
+                                        padding-top: 0.2em;
+                                    }
+                                </style>
+                                <script>
+
+                                </script>
+                                <div class="ex2a outer">
+                                    <div class="boilerplate">
+                                        Hi! My name is
+                                    </div>
+                                    <div class="name">
+                                        Bob
+                                    </div>
+                                </div>
+                            </template>
+                        </section>
+
+                        <section data-state="shadowstate">
+                            <h3>Shadow DOM & HTML Template</h3>
+
+                            <pre>
+                                <code data-trim contenteditable style="font-size: 18px;">                        
+var shadow = document.querySelector('#nameTag').createShadowRoot();
+var template = document.querySelector('#nameTagTemplate');
+shadow.appendChild(template.content.cloneNode());
+                            </code>
+                            </pre>
+                        </section>
                     </section>
 
                     <section data-state="customevent">
