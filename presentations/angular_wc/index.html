@@ -32,8 +32,8 @@
                 Reveal.addEventListener("slidechanged", function() {
                     alert();
                     /*var shadow = document.querySelector('#nameTag').createShadowRoot();
-                    var template = document.querySelector('#nameTagTemplate');
-                    shadow.appendChild(template.content);*/
+                     var template = document.querySelector('#nameTagTemplate');
+                     shadow.appendChild(template.content);*/
                 }, false);
             }
         </script>
@@ -214,12 +214,19 @@
                     </section>
 
                     <section>
-                        <h2>Data Binding</h2>
-                        <ol>
-                            <li>One is smaller than...</li>
-                            <li>Two is smaller than...</li>
-                            <li>Three!</li>
-                        </ol>
+                        <section>
+                            <h2>Data Binding</h2>
+                            <p>Data-binding es una sincronización automática de datos entre la vista y el modelo. 
+                                La forma en que Angular implementa el data-binding 
+                                permite tratar al modelo como single-source-of-truth en su aplicación. 
+                                La vista es una proyección de la modelo en todo momento. 
+                                Cuando el modelo cambia, la vista refleja el cambio, y viceversa.</p>
+                        </section>
+                        <section>
+                            <img src="img/One_Way_Data_Binding.png" alt=""/>
+                            <br>
+                            <img src="img/Two_Way_Data_Binding.png" alt=""/>
+                        </section>
                     </section>
 
                     <section data-markdown>
