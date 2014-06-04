@@ -102,11 +102,11 @@
                                 <a href="www.logikas.com" target="_blank">www.logikas.com</a>
                                 </font>
                             </div>
-                            <div style="text-align: right; ">
+                            <!--div style="text-align: right; ">
                                 <font color="#cccccc">
                                 <font style="font-size: 24px;">
                                 <a href="www.Linkedin.com/in/ThomasBurleson" target="_blank">www.Linkedin.com/in/ThomasBurleson</a>&nbsp;</font></font>
-                            </div>
+                            </div-->
                         </div>
                     </section>
 
@@ -159,18 +159,41 @@
                                 <li>Services / Factories</li>
                             </ul>
                         </section>
-                        <section >
-                            <h2>Que es una Directive?</h2>
-                            <!--p>That's it, time to go back up.</p-->
-                            <!--a href="#/2" class="image">
-                                <img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-                            </a-->
+                    </section>
+
+                    <section>
+                        <section>
+                            <h2>Boostrping</h2>
+                        </section>
+                        <section>
+                            <pre><code>
+&lt;!doctype html&gt;
+&lt;html xmlns:ng="http://angularjs.org" ng-app&gt;
+  &lt;body ng-app="app"&gt;
+    ...
+    &lt;script src="angular.js"/&gt;
+    &lt;script&gt;
+    var app = angular.module('GdgApp',
+        ['ui.router', 'ngAnimate']
+    );
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>                            
+                            <br>
+                            <img src="img/concepts-startup.png" alt="">
+                        </section>
+                    </section>
+
+                    <section>
+                        <section>
+                            <h2>Que es una Directiva?</h2>
                             <img src="img/homero.jpg" alt="Directiva"/>
                         </section>
 
                         <section>
                             <p>
-                                Podemos decir que una directiva es una marca en el DOM que sera utilizada por el <b>compilador</b> de AngularJS para anexe algun comportamiento especial a ese elemento, o que transforme el Elemento o sus Hijos. 
+                                Podemos decir que una directiva es una marca en el DOM que sera utilizada por el <b>compilador</b> de AngularJS para anexa algun comportamiento especial a ese elemento, o que transforme el Elemento o sus Hijos. 
                             </p>
                             <br>
                             <h3>
@@ -182,24 +205,122 @@
                         </section>
 
                         <section>
-                            <h2>Boostrping</h2>
-                            <p>
+                            <pre>
+                                <code>
+angular.module('myApp', [])
+    .directive('myDirective', function() {
+        return {
+            restrict: 'E',
+            template: '<a href="http://google.com">
+            Click me to go to Google</a>'
+        }
+});
 
-                            </p>
+
+&lt;my-directive="someExpression"&gt;
+&lt;/my-directive&gt;
+
+&lt;div my-directive="someExpression"&gt;
+&lt;/div&gt;
+
+&lt;div class="my-directive:someExpression"&gt;
+&lt;/div&gt;
+
+
+</code>
+                            </pre>
                         </section>
 
                     </section>
-
-
+                    
                     <section>
-                        <h2>Expresiones</h2>
-                        <p>
+                        <section>
+                            <h1>Controllers</h1>
+                        </section>
+                        
+                        <section>
+                            <p>Los controladores es una funcion que anexa valores y/o comportamiento al scope asociado. Este escope, es tambien manejado por la vista</p>
+                            <br>
+                            <pre>
+<code>
+var app = angular.module('app', []);
+    app.controller('FirstController', function($scope) {
+    $scope.counter = 0;
+    $scope.add = function(value){
+        $scope.count = $scope.count + value;
+    }
+    $scope.subtract = function(value){
+        $scope.count = $scope.count - value;
+    }
+});
 
-                        </p>
+&lt;div ng-controller="FirstController"&gt;
+    &lt;h4&gt;The simplest adding machine ever&lt;/h4&gt;
+    &lt;button ng-click="add(1)" class="button"&gt;Add&lt;/button&gt;
+    &lt;a ng-click="subtract(1)" class="button alert"&gt;Subtract&lt;/a&gt;
+    &lt;h4&gt;Current count: {{ counter }}&lt;/h4&gt;
+&lt;/div&gt;
+
+                            </code>
+                            </pre>
+                        </section>
                     </section>
 
                     <section>
-                        <h2>Dependency Injection</h2>
+                        <section>
+                            <h2>Expresiones</h2>
+                        </section>
+
+                        <section>
+                            <p>Angular Expressions son parecidas a las Expressions de JavaScript pero con algunas diferencias, y suelen colocarlse entre "{{}}"</p><br>
+                            <p><strong>{{1+5}}</strong></p><br>
+                            <p><strong>{{store.products}}</strong></p>
+                        </section>
+
+                        <section>
+                            <p>Diferencias con JavaScript Expressions</p><br>
+                            <p><strong>Contexto:</strong> Las expresiones de JS son evaluadas en el contexto de "windows", las expresiones de Angular son evaluadas en el contexto del scope</p><br>
+                            <p><strong>Forgiving:</strong> Las expresiones de JS cuando es evaluado algo no definido, se genera ReferenceError o TypeError, en Angular el resultado es undefined o null</p><br>
+                            <p><strong>No Control Flow Statements:</strong> En AngularJS no se puede utilizar condicionales, loops o excepciones.</p><br>
+                            <p><strong>Filters: </strong> Es posible utilizar Filtros de Angular en las Expreciones para manejar la presentacion.</p>
+                        </section>
+                    </section>
+
+
+                    <section>
+                        <section>
+                            <h2>Dependency Injection</h2>
+                        </section>
+
+                        <section>
+                            <p>DI es un patron de software encargado de la creacion de componentes y gestion de sus dependencias</p><br>
+                            <p>En Angular el subsistema de DI es el encargado de crear los objectos, gestionar las dependecias y ponerlos publicos para el resto de los componentes</p><br>
+                        </section>
+
+                        <section>
+                            <pre>
+<code>
+angular.module('myModule', [])
+  .config(['depProvider', function(depProvider){
+    ...
+  }])
+  .run(['depService', function(depService) {
+    ...
+  }]);    
+    
+    
+someModule.controller('MyController', ['$scope', 'dep1', 'dep2', function($scope, dep1, dep2) {
+  ...
+  $scope.aMethod = function() {
+    ...
+  }
+  ...
+}]);
+</code>
+                            </pre>
+                        </section>
+
+
 
                     </section>
 
