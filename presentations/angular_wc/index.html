@@ -102,11 +102,6 @@
                                 <a href="www.logikas.com" target="_blank">www.logikas.com</a>
                                 </font>
                             </div>
-                            <!--div style="text-align: right; ">
-                                <font color="#cccccc">
-                                <font style="font-size: 24px;">
-                                <a href="www.Linkedin.com/in/ThomasBurleson" target="_blank">www.Linkedin.com/in/ThomasBurleson</a>&nbsp;</font></font>
-                            </div-->
                         </div>
                     </section>
 
@@ -115,14 +110,19 @@
                         <br>
                         <p>
                             Los <b>Clientes Web</b> han tomado mucha relevancia, 
-                            por ende debemos tener tener un pensamiento diferente
-                            a la hora de desarrollar.
+                            por lo tanto, debemos tener tener un pensamiento diferente
+                            a la hora de encarar desarrollos para la Web Moderna.
                         </p>
+                        <h4>Conceptos:</h4>
                         <ul>
                             <li>Browser como Plataforma</li>
                             <li>Organizacion del Codigo</li>
                             <li>Modularidad</li>
+                            <li>Tiempo de Carga</li>
                             <li>Testing</li>
+                            <li>UX</li>
+                            <li>SPA</li>
+                            <li>y mucho más</li>
                         </ul>
 
                         <aside class="notes">
@@ -173,39 +173,102 @@
     ...
     &lt;script src="angular.js"/&gt;
     &lt;script&gt;
-    var app = angular.module('GdgApp',
-        ['ui.router', 'ngAnimate']
+    var app = angular.module('app',
+        ['ui.router', 'ngAnimate'] 
     );
     &lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>                            
                             <br>
-                            <img src="img/concepts-startup.png" alt="">
-                        </section>
-                    </section>
+                            <div>
+                                <h4>Inicialización Automatica</h4>
+                                <div style="float:right; width: 40%">
+                                        <ul>
+                                            <li><small>Inicialización cuando el DOM esta completo</small></li>
+                                            <li><small>Búsqueda de la directiva ng-app</small></li>
+                                            <li><small>Si ng-app es encontrada, se carga el módulo asociado</small></li>
+                                            <li><small>Crea el $injector para la aplicacion (DI)</small></li>
+                                            <li><small>Compila el DOM tomando como root ng-app</small></li>
+                                        </ul>
+                                    </div>
+                                    <div style="float:left; width: 50%"><img src="img/concepts-startup.png" alt=""></div>
+                                </div>
+                            </section>
+                            <section>
+                                <h4>Inicialización Manual</h4>
+                                <pre>
+<code>
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  Hello {{'World'}}!
+  &lt;script src="http://code.angularjs.org/angular.js"&gt;&lt;/script&gt;
 
-                    <section>
-                        <section>
-                            <h2>Que es una Directiva?</h2>
-                            <img src="img/homero.jpg" alt="Directiva"/>
+  &lt;script&gt;
+    angular.module('myApp', [])
+      .controller('MyController', ['$scope', function ($scope) {
+        $scope.greetMe = 'World';
+      }]);
+
+    angular.element(document).ready(function() {
+      angular.bootstrap(document, ['myApp']);
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>                            
+                                <br>
+                                <div>
+                                    <h5>Cuando?</h5>
+                                    <ul>
+                                        <li>Cuando necesitamos inicializar algo en nuestra plataforma antes que AngularJS inicie</li>
+                                        <li>Cuando utilizamos un script de carga</li>
+                                    </ul>
+                                    <br>
+                                    <small>Se deben definir todos los módulos antes de llamar a angular.bootstrap(document, ['myApp']);</small>
+                                </div>
+                            </section>
                         </section>
 
                         <section>
-                            <p>
-                                Podemos decir que una directiva es una marca en el DOM que sera utilizada por el <b>compilador</b> de AngularJS para anexa algun comportamiento especial a ese elemento, o que transforme el Elemento o sus Hijos. 
-                            </p>
+                            <h2>Compilación</h2>
                             <br>
-                            <h3>
-                                Que significa compilar?  
-                            </h3>
-                            <p>
-                                Para AngularJS compilar siginifica atachar "event listeners" al HTML para hacerlo interactivo.
-                            </p>
+                            <small>
+                                <h4>Permite Agregar al nueva sintaxis, es decir nuevos elementos u/o atributos</h4>
+                                <br>
+                                <br>
+                                <h4>El proceso de compilación ocurre en dos fases:</h4>
+                                <br>
+                                <br>
+                                <ul>
+                                    <li>Compile: Recorre el DOM buscando directivas, el resultado es una función de linking</li>
+                                    <li>Link: Combina las directivas con un scope y produce una vista viva, cualquier cambio en el modelo (scope) es reflejado en la vista y viceversa.</li>
+                                </ul>
+                            </small>
                         </section>
 
                         <section>
-                            <pre>
+                            <section>
+                                <h2>Que es una Directiva?</h2>
+                                <img src="img/homero.jpg" alt="Directiva"/>
+                            </section>
+
+                            <section>
+                                <p>
+                                    Podemos decir que una directiva es una marca en el DOM que sera utilizada por el <b>compilador</b> de AngularJS para anexa algun comportamiento especial a ese elemento, o que transforme el Elemento o sus Hijos. 
+                                </p>
+                                <br>
+                                <h3>
+                                    Que significa compilar?  
+                                </h3>
+                                <p>
+                                    Para AngularJS compilar siginifica atachar "event listeners" al HTML para hacerlo interactivo.
+                                </p>
+                            </section>
+
+                            <section>
+                                <pre>
                                 <code>
 angular.module('myApp', [])
     .directive('myDirective', function() {
@@ -228,20 +291,20 @@ angular.module('myApp', [])
 
 
 </code>
-                            </pre>
+                                </pre>
+                            </section>
+
                         </section>
 
-                    </section>
-                    
-                    <section>
                         <section>
-                            <h1>Controllers</h1>
-                        </section>
-                        
-                        <section>
-                            <p>Los controladores es una funcion que anexa valores y/o comportamiento al scope asociado. Este escope, es tambien manejado por la vista</p>
-                            <br>
-                            <pre>
+                            <section>
+                                <h1>Controllers</h1>
+                            </section>
+
+                            <section>
+                                <p>Los controladores es una funcion que anexa valores y/o comportamiento al scope asociado. Este escope, es tambien manejado por la vista</p>
+                                <br>
+                                <pre>
 <code>
 var app = angular.module('app', []);
     app.controller('FirstController', function($scope) {
@@ -262,43 +325,43 @@ var app = angular.module('app', []);
 &lt;/div&gt;
 
                             </code>
-                            </pre>
-                        </section>
-                    </section>
-
-                    <section>
-                        <section>
-                            <h2>Expresiones</h2>
+                                </pre>
+                            </section>
                         </section>
 
                         <section>
-                            <p>Angular Expressions son parecidas a las Expressions de JavaScript pero con algunas diferencias, y suelen colocarlse entre "{{}}"</p><br>
-                            <p><strong>{{1+5}}</strong></p><br>
-                            <p><strong>{{store.products}}</strong></p>
+                            <section>
+                                <h2>Expresiones</h2>
+                            </section>
+
+                            <section>
+                                <p>Angular Expressions son parecidas a las Expressions de JavaScript pero con algunas diferencias, y suelen colocarlse entre "{{}}"</p><br>
+                                <p><strong>{{1+5}}</strong></p><br>
+                                <p><strong>{{store.products}}</strong></p>
+                            </section>
+
+                            <section>
+                                <p>Diferencias con JavaScript Expressions</p><br>
+                                <p><strong>Contexto:</strong> Las expresiones de JS son evaluadas en el contexto de "windows", las expresiones de Angular son evaluadas en el contexto del scope</p><br>
+                                <p><strong>Forgiving:</strong> Las expresiones de JS cuando es evaluado algo no definido, se genera ReferenceError o TypeError, en Angular el resultado es undefined o null</p><br>
+                                <p><strong>No Control Flow Statements:</strong> En AngularJS no se puede utilizar condicionales, loops o excepciones.</p><br>
+                                <p><strong>Filters: </strong> Es posible utilizar Filtros de Angular en las Expreciones para manejar la presentacion.</p>
+                            </section>
                         </section>
 
-                        <section>
-                            <p>Diferencias con JavaScript Expressions</p><br>
-                            <p><strong>Contexto:</strong> Las expresiones de JS son evaluadas en el contexto de "windows", las expresiones de Angular son evaluadas en el contexto del scope</p><br>
-                            <p><strong>Forgiving:</strong> Las expresiones de JS cuando es evaluado algo no definido, se genera ReferenceError o TypeError, en Angular el resultado es undefined o null</p><br>
-                            <p><strong>No Control Flow Statements:</strong> En AngularJS no se puede utilizar condicionales, loops o excepciones.</p><br>
-                            <p><strong>Filters: </strong> Es posible utilizar Filtros de Angular en las Expreciones para manejar la presentacion.</p>
-                        </section>
-                    </section>
-
-
-                    <section>
-                        <section>
-                            <h2>Dependency Injection</h2>
-                        </section>
 
                         <section>
-                            <p>DI es un patron de software encargado de la creacion de componentes y gestion de sus dependencias</p><br>
-                            <p>En Angular el subsistema de DI es el encargado de crear los objectos, gestionar las dependecias y ponerlos publicos para el resto de los componentes</p><br>
-                        </section>
+                            <section>
+                                <h2>Dependency Injection</h2>
+                            </section>
 
-                        <section>
-                            <pre>
+                            <section>
+                                <p>DI es un patron de software encargado de la creacion de componentes y gestion de sus dependencias</p><br>
+                                <p>En Angular el subsistema de DI es el encargado de crear los objectos, gestionar las dependecias y ponerlos publicos para el resto de los componentes</p><br>
+                            </section>
+
+                            <section>
+                                <pre>
 <code>
 angular.module('myModule', [])
   .config(['depProvider', function(depProvider){
@@ -317,80 +380,80 @@ someModule.controller('MyController', ['$scope', 'dep1', 'dep2', function($scope
   ...
 }]);
 </code>
-                            </pre>
-                        </section>
-
-
-
-                    </section>
-
-                    <section>
-                        <section>
-                            <h2>Data Binding</h2>
-                            <p>Data-binding es una sincronización automática de datos entre la vista y el modelo. 
-                                La forma en que Angular implementa el data-binding 
-                                permite tratar al modelo como single-source-of-truth en su aplicación. 
-                                La vista es una proyección de la modelo en todo momento. 
-                                Cuando el modelo cambia, la vista refleja el cambio, y viceversa.</p>
-                        </section>
-                        <section>
-                            <img src="img/One_Way_Data_Binding.png" alt=""/>
-                            <br>
-                            <img src="img/Two_Way_Data_Binding.png" alt=""/>
-                        </section>
-                    </section>
-
-                    <!--section data-markdown>
-                        <script type="text/template">
-                            ## Markdown support
-
-                            For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-
-                            ```
-                            <section data-markdown>
-                            ## Markdown support
-
-                            For those of you who like that sort of thing.
-                            Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
+                                </pre>
                             </section>
-                            ```
-                        </script>
-                    </section-->
 
-                    <section>
-                        <section>
-                            <h1>Scopes</h1>
+
+
                         </section>
 
                         <section>
-                            <p>
-                                Es un objeto hace referencia al modelo en la aplicación.<br>
-                                El scope es un contexto de ejecución para las <a href="#/2/3">expresiones</a>.<br>
-                                Ademas, los scopes son organizados en una estructura jerárquica imitando la estructura del DOM.<br>
-                                Puden ver las expresiones y propagar eventos<br>
-                            </p>
+                            <section>
+                                <h2>Data Binding</h2>
+                                <p>Data-binding es una sincronización automática de datos entre la vista y el modelo. 
+                                    La forma en que Angular implementa el data-binding 
+                                    permite tratar al modelo como single-source-of-truth en su aplicación. 
+                                    La vista es una proyección de la modelo en todo momento. 
+                                    Cuando el modelo cambia, la vista refleja el cambio, y viceversa.</p>
+                            </section>
+                            <section>
+                                <img src="img/One_Way_Data_Binding.png" alt=""/>
+                                <br>
+                                <img src="img/Two_Way_Data_Binding.png" alt=""/>
+                            </section>
                         </section>
 
+                        <!--section data-markdown>
+                            <script type="text/template">
+                                ## Markdown support
+    
+                                For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
+    
+                                ```
+                                <section data-markdown>
+                                ## Markdown support
+    
+                                For those of you who like that sort of thing.
+                                Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
+                                </section>
+                                ```
+                            </script>
+                        </section-->
+
                         <section>
-                            <ul>
-                                <li>Los scopes proveen un método $watch en su API para observar los cambios en el modelo.</li>
-                                <li>Proveen un método $apply para propagar los cambios a través del sistema desde la vista hacia afuera (Controllers, Services, Angular event handlers.</li>
-                                <li>Los scopes pueden ser nested, limitando asi el acceso a propidades del modelo:</li>
+                            <section>
+                                <h1>Scopes</h1>
+                            </section>
+
+                            <section>
+                                <p>
+                                    Es un objeto hace referencia al modelo en la aplicación.<br>
+                                    El scope es un contexto de ejecución para las <a href="#/2/3">expresiones</a>.<br>
+                                    Ademas, los scopes son organizados en una estructura jerárquica imitando la estructura del DOM.<br>
+                                    Puden ver las expresiones y propagar eventos<br>
+                                </p>
+                            </section>
+
+                            <section>
                                 <ul>
-                                    <li>Child Scope: Hereda las propiedades del padre</li>
-                                    <li>Insolated Scope: No hereda las propiedades del padre</li>
+                                    <li>Los scopes proveen un método $watch en su API para observar los cambios en el modelo.</li>
+                                    <li>Proveen un método $apply para propagar los cambios a través del sistema desde la vista hacia afuera (Controllers, Services, Angular event handlers.</li>
+                                    <li>Los scopes pueden ser nested, limitando asi el acceso a propidades del modelo:</li>
+                                    <ul>
+                                        <li>Child Scope: Hereda las propiedades del padre</li>
+                                        <li>Insolated Scope: No hereda las propiedades del padre</li>
+                                    </ul>
                                 </ul>
-                            </ul>
-                        </section>
+                            </section>
 
-                        <section>
-                            <p>El scope es un pegamento entre la vista y el controller</p>
-                            <p>En la fase de <strong>linking</strong> del template la directiva setea $watch expressions en el scope. <br>
-                                $watch permite a la directiva ser notificada de los cambios en las propiedades, lo que permite actualizar el DOM.
-                            </p>
-                            <p>Tanto controller como la directiva tienen una referencia al scope, pero no entre si</p>
-                            <p>Este principio de visibilidad es muy óptimo porque hace asnóstico de la vista al controller y favorece las pruebas</p>
-                            <pre>
+                            <section>
+                                <p>El scope es un pegamento entre la vista y el controller</p>
+                                <p>En la fase de <strong>linking</strong> del template la directiva setea $watch expressions en el scope. <br>
+                                    $watch permite a la directiva ser notificada de los cambios en las propiedades, lo que permite actualizar el DOM.
+                                </p>
+                                <p>Tanto controller como la directiva tienen una referencia al scope, pero no entre si</p>
+                                <p>Este principio de visibilidad es muy óptimo porque hace asnóstico de la vista al controller y favorece las pruebas</p>
+                                <pre>
 <code>
 function MyController($scope) {
     $scope.username = 'World';
@@ -399,89 +462,93 @@ function MyController($scope) {
     };
 }
 </code>
-                            </pre>
+                                </pre>
+                            </section>
                         </section>
-                    </section>
 
-                    <section>
-
-
-                    </section>
-
-                    <section>
                         <section>
-                            <h1>Web Component!!</h1>
+                            <section>
+                                <h1>Services</h1>
+                            </section>
+                            <section>
+                                <small>Un servicio, es un objeto (Singleton) que son enlazados mediante DI. son una herramienta poderosa para la organización de código en la aplicación.</small>
+                            </section>
                         </section>
+
                         <section>
-                            <p>Imagina poder reutilizar tus Widgets en todas tus aplicaciones</p><br>
-                            <p>Imagina poder reutilizar tus componentes lógicos en todas tus aplicaciones</p>
+                            <section>
+                                <h1>Web Component!!</h1>
+                            </section>
+                            <section>
+                                <p>Imagina poder reutilizar tus Widgets en todas tus aplicaciones</p><br>
+                                <p>Imagina poder reutilizar tus componentes lógicos en todas tus aplicaciones</p>
 
 
-                        </section>
-                        <!--p>
-                            You can select from different transitions, like: <br>
-                            <a href="?transition=cube#/transitions">Cube</a> -
-                            <a href="?transition=page#/transitions">Page</a> -
-                            <a href="?transition=concave#/transitions">Concave</a> -
-                            <a href="?transition=zoom#/transitions">Zoom</a> -
-                            <a href="?transition=linear#/transitions">Linear</a> -
-                            <a href="?transition=fade#/transitions">Fade</a> -
-                            <a href="?transition=none#/transitions">None</a> -
-                            <a href="?#/transitions">Default</a>
-                        </p-->
-
-                        <section id="themes">
-                            <h2>Como se compone?</h2>
+                            </section>
                             <!--p>
-                                Reveal.js comes with a few themes built in: <br>
-                                <a href="?#/themes">Default</a> -
-                                <a href="?theme=sky#/themes">Sky</a> -
-                                <a href="?theme=beige#/themes">Beige</a> -
-                                <a href="?theme=simple#/themes">Simple</a> -
-                                <a href="?theme=serif#/themes">Serif</a> -
-                                <a href="?theme=night#/themes">Night</a> <br>
-                                <a href="?theme=moon#/themes">Moon</a> -
-                                <a href="?theme=solarized#/themes">Solarized</a>
+                                You can select from different transitions, like: <br>
+                                <a href="?transition=cube#/transitions">Cube</a> -
+                                <a href="?transition=page#/transitions">Page</a> -
+                                <a href="?transition=concave#/transitions">Concave</a> -
+                                <a href="?transition=zoom#/transitions">Zoom</a> -
+                                <a href="?transition=linear#/transitions">Linear</a> -
+                                <a href="?transition=fade#/transitions">Fade</a> -
+                                <a href="?transition=none#/transitions">None</a> -
+                                <a href="?#/transitions">Default</a>
                             </p-->
-                            <!--h2>
-                                <font>
-                                <font>
-                                <font>
-                                &nbsp;&nbsp;<font style="font-size: 32px;"><font>Let's use </font>
-                                <font color="#6fa8dc">Packages </font>
-                                <font color="#ffffff">instead...</font>
-                                </font>
-                                </font>
-                                <font style="font-size: 32px;">
-                                </font>
-                                </font>
-                                <font style="font-size: 32px;">
-                                </font>
-                                </font>
-                                <font style="font-size: 32px;">
-                                </font>
-                            </h2-->
-                            <ul>
-                                <li><font color="#ffd966">Shadow DOM:</font> Permite <font color="#6fa8dc">encapsular </font>el DOM y CSS</li>
-                                <li><font color="#ffd966">HTML Templates:</font> Es una forma de clonar el DOM para que este sea reutilizado en la pagina</li>
-                                <li><font color="#ffd966">Custom elements:</font> Esto nos permite extender un elemento de HTML o bien crear uno nuevo.</li>
-                                <li><font color="#ffd966">HTML Imports:</font> Es la manera de inclusión de otros WebComponent.</li>
-                            </ul>
-                            <!--p>
-                                <small>
-                                    * Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-                                </small>
-                            </p-->
-                        </section>
 
-                        <section>
-                            <h1>Shadow DOM</h1>
-                            <ul>
-                                <li>shadow root: Nuevo tipo de nodo</li>
-                                <li>shadow host: Es todo nodo que tiene asociado un shadow root, 
-                                    El contenido del shadow host no es renderizado, en su lugar es renderizado el contenido del shadow root</li>
-                            </ul>
-                            <pre>
+                            <section id="themes">
+                                <h2>Como se compone?</h2>
+                                <!--p>
+                                    Reveal.js comes with a few themes built in: <br>
+                                    <a href="?#/themes">Default</a> -
+                                    <a href="?theme=sky#/themes">Sky</a> -
+                                    <a href="?theme=beige#/themes">Beige</a> -
+                                    <a href="?theme=simple#/themes">Simple</a> -
+                                    <a href="?theme=serif#/themes">Serif</a> -
+                                    <a href="?theme=night#/themes">Night</a> <br>
+                                    <a href="?theme=moon#/themes">Moon</a> -
+                                    <a href="?theme=solarized#/themes">Solarized</a>
+                                </p-->
+                                <!--h2>
+                                    <font>
+                                    <font>
+                                    <font>
+                                    &nbsp;&nbsp;<font style="font-size: 32px;"><font>Let's use </font>
+                                    <font color="#6fa8dc">Packages </font>
+                                    <font color="#ffffff">instead...</font>
+                                    </font>
+                                    </font>
+                                    <font style="font-size: 32px;">
+                                    </font>
+                                    </font>
+                                    <font style="font-size: 32px;">
+                                    </font>
+                                    </font>
+                                    <font style="font-size: 32px;">
+                                    </font>
+                                </h2-->
+                                <ul>
+                                    <li><font color="#ffd966">Shadow DOM:</font> Permite <font color="#6fa8dc">encapsular </font>el DOM y CSS</li>
+                                    <li><font color="#ffd966">HTML Templates:</font> Es una forma de clonar el DOM para que este sea reutilizado en la pagina</li>
+                                    <li><font color="#ffd966">Custom elements:</font> Esto nos permite extender un elemento de HTML o bien crear uno nuevo.</li>
+                                    <li><font color="#ffd966">HTML Imports:</font> Es la manera de inclusión de otros WebComponent.</li>
+                                </ul>
+                                <!--p>
+                                    <small>
+                                        * Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
+                                    </small>
+                                </p-->
+                            </section>
+
+                            <section>
+                                <h1>Shadow DOM</h1>
+                                <ul>
+                                    <li>shadow root: Nuevo tipo de nodo</li>
+                                    <li>shadow host: Es todo nodo que tiene asociado un shadow root, 
+                                        El contenido del shadow host no es renderizado, en su lugar es renderizado el contenido del shadow root</li>
+                                </ul>
+                                <pre>
                                 <code data-trim contenteditable style="font-size: 18px;">
                                     
 &lt;button&gt;Hello, world!&lt;/button&gt;
@@ -682,12 +749,70 @@ document.body.appendChild(new XFoo());
                                 </li>
                             </ul>
                         </section>
+                        <section>
+                            <h1>Un poco de HTML5</h1>
+                            <p>Links de interés infaltables para todo desarrollador</p>
+                            <ul>
+                                <li>Tecnologías & Frameworks
+                                    <ul>
+                                        <li><a href="https://angularjs.org/">https://angularjs.org/</a>. AngularJS</li>
+                                        <li><a href="http://campus.codeschool.com/courses/shaping-up-with-angular-js/">http://campus.codeschool.com/courses/shaping-up-with-angular-js/</a>. AngularJS Course</li>
+                                        <li><a href="http://platform.html5.org/">http://platform.html5.org/</a>. Browser Tecnologies</li>
+                                        <li><a href="http://html5please.com/">http://html5please.com/</a>. HTML5 Please</li>
+                                        <li><a href="https://developer.mozilla.org/en-US/">https://developer.mozilla.org/en-US/</a>.MDN Mozilla</li>
+                                        <li><a href="http://www.html5rocks.com/en/">http://www.html5rocks.com/en/</a>.HTML5 Rocks</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </section>
                     </section>
 
-
-
-
-
+                    <section>
+                        <h2>
+                            <font color="#666666">Sobre Mi</font>
+                        </h2>
+                        <div>
+                            <br>
+                        </div>
+                        <div>
+                            <font color="#ffd966" style="font-size: 54px;">Cristian Rinaldi</font>
+                        </div>
+                        <div>
+                            <br>
+                        </div>
+                        <div>
+                            <ul>
+                                <li>
+                                    <span style="text-align: center;">email: &nbsp; &nbsp; &nbsp; &nbsp;csrinaldi @ Gmail.com</span>
+                                    <br>
+                                </li>
+                                <li>
+                                    <span style="text-align: center;">twitter: &nbsp; &nbsp; &nbsp;@csrinaldi</span>
+                                    <br>
+                                </li>
+                                <li>
+                                    <span style="text-align: center;">blog: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<a href="http://www.logicas.com" target="_blank">www.logikas.com</a>
+                                    </span>
+                                    <br>
+                                </li>
+                                <li>
+                                    <span style="text-align: center;">linkedIn: &nbsp;</span>&nbsp; <a href="https://plus.google.com/108221888675664107719/posts?hl=es-419" target="_blank">+Cristian Rinaldi</a>
+                                </li>
+                                <li>
+                                    <span style="text-align: center;">code: &nbsp; &nbsp; &nbsp; &nbsp; </span>&nbsp;<a href="https://github.com/csrinaldi" target="_blank">https://github.com/csrinaldi</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <br>
+                        </div>
+                        <div>
+                            <font color="#666666" style="font-size: 32px;">Need a senior, front-end architect ?</font>
+                        </div>
+                        <div>
+                            <font color="#666666" style="font-size: 32px;">I am looking for the <i>next</i> great project...</font>
+                        </div>
+                    </section>
 
                     <!--section>
                         <h2>Export to PDF</h2>
